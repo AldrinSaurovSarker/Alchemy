@@ -1,3 +1,10 @@
+const allItems = {
+    "rose": {
+        emoji: "🌹",
+        description: "The symbol of love for thousand years"
+    }
+}
+
 const mergePairs = {
     "flower-heart": {name: "rose", emoji: "🌹"},
     "heart-flower": {name: "rose", emoji: "🌹"},
@@ -115,6 +122,11 @@ function merge($draggedItem, highestZIndexItem, mergeResult) {
         highestZIndexItem.element.remove();
     });
 
+    if (!itemsData.includes(mergeResult.name)) {
+        itemsData.push(mergeResult.name);
+        discovery(mergeResult.name);
+    }
+
     setTimeout(function() {
         $mergeAnimation.remove();
 
@@ -147,6 +159,43 @@ function merge($draggedItem, highestZIndexItem, mergeResult) {
             }
         });
     }, 500);
+}
+
+function discovery(itemName) {
+    var item = allItems[itemName];
+
+    // Create new elements
+    var container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    container.style.height = '100vh';
+    container.style.width = '100%';
+    container.style.textAlign = 'center';
+    container.style.backgroundColor = '#0096ff';
+
+    // var image = document.createElement('img');
+    // image.src = item.emoji;
+    // image.alt = item.name;
+
+    var name = document.createElement('h1');
+    name.textContent = itemName;
+
+    var image = document.createElement('div');
+    image.textContent = item.emoji;
+
+    var description = document.createElement('div');
+    description.textContent = item.description;
+
+    // Append elements to container
+    container.appendChild(name);
+    container.appendChild(image);
+    container.appendChild(description);
+
+    // Clear the screen and add the new container
+    document.body.innerHTML = '';
+    document.body.appendChild(container);
 }
 
 $(document).ready(function() {
