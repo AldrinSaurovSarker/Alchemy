@@ -1,0 +1,16 @@
+# Check for merge
+1. Not merge animation                      ✅
+2. Merge                                    
+    a. New item appear                      ✅
+    b. animation                            ✅
+    c. If already merged before, don't
+    d. If brand new item, display
+
+# Style                                     
+1. Change item font, image, style, etc      
+2. Dark Mode                                
+3. Music                                    
+
+# Items                                     
+1. All item list in side                    
+2. Item duplication on double click         
