@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Games</title>
+    <title>Alchemy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link href="glow.css" rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/09146724eb.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,17 +15,9 @@
 <body class="d-flex align-items-center justify-content-center">
     <div id="game-container" class="d-flex w-100 h-100">
         <div id="canvas">
-            <!-- <div class="item" data-name="bird">
+            <div class="item" data-name="bird">
                 <div class="emoji">🐦</div>
                 <div class="name">Bird</div>
-            </div> -->
-            <div class="item" data-name="flower">
-                <div class="emoji">🌸</div>
-                <div class="name">Flower</div>
-            </div>
-            <div class="item" data-name="heart">
-                <div class="emoji">❤️</div>
-                <div class="name">Heart</div>
             </div>
             <div class="item" data-name="flower">
                 <div class="emoji">🌸</div>
@@ -34,7 +27,15 @@
                 <div class="emoji">❤️</div>
                 <div class="name">Heart</div>
             </div>
-            <!-- <div class="item" data-name="lion">
+            <div class="item" data-name="flower">
+                <div class="emoji">🌸</div>
+                <div class="name">Flower</div>
+            </div>
+            <div class="item" data-name="heart">
+                <div class="emoji">❤️</div>
+                <div class="name">Heart</div>
+            </div>
+            <div class="item" data-name="lion">
                 <div class="emoji">🦁</div>
                 <div class="name">Lion</div>
             </div>
@@ -45,7 +46,7 @@
             <div class="item" data-name="sun">
                 <div class="emoji">☀️</div>
                 <div class="name">Sun</div>
-            </div> -->
+            </div>
         </div>
 
         <div id="sidebar" class="border-start border-dark p-2">
@@ -55,7 +56,23 @@
             </div>
         </div>
     </div>
+
+    <div class="discovery d-none">
+        <div class="light-source">
+            <div class="rays"></div>
+        </div>
+
+        <h2 class="item-info text-info fw-bold display-5 mb-5">New Item Discovered</h2>
+        <div class="item-image-container rounded-circle p-5 mt-5">
+            <img src="images/bat.png" class="item-image img-fluid">
+        </div>
+        <h2 class="item-name text-warning text-capitalize fw-bold display-1"></h2>
+        <div class="item-description text-light p-4 mt-4 rounded"></div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="discovery.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

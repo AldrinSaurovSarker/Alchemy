@@ -1,0 +1,38 @@
+body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.light-source {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, white, rgba(255, 255, 255, 0.5));
+    border-radius: 50%;
+    box-shadow: 0 0 1000px 200px rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.rays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2000px;
+    height: 2000px;
+    background: conic-gradient(from 0deg, transparent, transparent 15deg, rgba(0, 0, 0, 0.5) 15deg, rgba(0, 0, 0, 0.5) 30deg, transparent 30deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 50%;
+    animation: rotate-rays 30s linear infinite;
+}
+
+@keyframes rotate-rays {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}

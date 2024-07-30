@@ -2,6 +2,10 @@ const allItems = {
     "rose": {
         emoji: "🌹",
         description: "The symbol of love for thousand years"
+    },
+    "sunflower": {
+        emoji: "🌻",
+        description: "The flower that follows the sun"
     }
 }
 
@@ -164,38 +168,24 @@ function merge($draggedItem, highestZIndexItem, mergeResult) {
 function discovery(itemName) {
     var item = allItems[itemName];
 
-    // Create new elements
-    var container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.flexDirection = 'column';
-    container.style.alignItems = 'center';
-    container.style.justifyContent = 'center';
-    container.style.height = '100vh';
-    container.style.width = '100%';
-    container.style.textAlign = 'center';
-    container.style.backgroundColor = '#0096ff';
+    const canvas = document.querySelector('#game-container');
+    canvas.classList.add('d-none');
+    canvas.classList.remove('d-flex');
 
-    // var image = document.createElement('img');
-    // image.src = item.emoji;
-    // image.alt = item.name;
+    const discovery = document.querySelector('.discovery');
+    discovery.classList.remove('d-none');
+    discovery.classList.add('d-flex');
 
-    var name = document.createElement('h1');
-    name.textContent = itemName;
+    document.querySelector('.item-name').innerHTML = itemName;
+    document.querySelector('.item-description').innerHTML = item.description;
 
-    var image = document.createElement('div');
-    image.textContent = item.emoji;
-
-    var description = document.createElement('div');
-    description.textContent = item.description;
-
-    // Append elements to container
-    container.appendChild(name);
-    container.appendChild(image);
-    container.appendChild(description);
-
-    // Clear the screen and add the new container
-    document.body.innerHTML = '';
-    document.body.appendChild(container);
+    discovery.addEventListener('click', function (event) {
+        discovery.classList.add('d-none');
+        discovery.classList.remove('d-flex');
+        
+        canvas.classList.remove('d-none');
+        canvas.classList.add('d-flex');
+    })
 }
 
 $(document).ready(function() {
