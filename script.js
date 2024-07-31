@@ -1,6 +1,6 @@
 const allItems = {
     "rose": {
-        emoji: "🌹",
+        emoji: "rose.png",
         description: "The symbol of love for thousand years"
     },
     "sunflower": {
@@ -10,12 +10,12 @@ const allItems = {
 }
 
 const mergePairs = {
-    "flower-heart": {name: "rose", emoji: "🌹"},
-    "heart-flower": {name: "rose", emoji: "🌹"},
-    "flower-sun": {name: "sunflower", emoji: "🌻"},
-    "sun-flower": {name: "sunflower", emoji: "🌻"},
-    "bird-night": {name: "owl", emoji: "🦉"},
-    "night-bird": {name: "owl", emoji: "🦉"}
+    "flower-heart": {name: "rose"},
+    "heart-flower": {name: "rose"},
+    "flower-sun": {name: "sunflower"},
+    "sun-flower": {name: "sunflower"},
+    "bird-night": {name: "owl"},
+    "night-bird": {name: "owl"}
 };
 
 var zIndex = 0;
@@ -100,7 +100,7 @@ function merge($draggedItem, highestZIndexItem, mergeResult) {
                 zIndex: zIndex++,
                 visibility: 'hidden'
             })
-            .append('<div class="emoji">' + mergeResult.emoji + '</div>')  
+            .append('<img src="images/' + allItems[mergeResult.name].emoji + '" class="emoji">')
             .append('<div class="name">' + mergeResult.name + '</div>');
 
             $('#canvas').append($newItem);
@@ -165,8 +165,10 @@ function merge($draggedItem, highestZIndexItem, mergeResult) {
     }, 500);
 }
 
-function discovery(itemName) {
+async function discovery(itemName) {
     var item = allItems[itemName];
+
+    await new Promise(r => setTimeout(r, 350));
 
     const canvas = document.querySelector('#game-container');
     canvas.classList.add('d-none');
@@ -178,6 +180,7 @@ function discovery(itemName) {
 
     document.querySelector('.item-name').innerHTML = itemName;
     document.querySelector('.item-description').innerHTML = item.description;
+    document.querySelector('.item-image').setAttribute("src", 'images/' + item.emoji);
 
     discovery.addEventListener('click', function (event) {
         discovery.classList.add('d-none');
@@ -189,28 +192,65 @@ function discovery(itemName) {
 }
 
 $(document).ready(function() {
-    $(".item").draggable({
-        start: function(event, ui) {
-            zIndex++;
-            $(this).css("z-index", zIndex);
-        },
-        stop: function(event, ui) {
-            var $draggedItem = $(this);
-            var itemPos = ui.helper.offset();
-            var canvasPos = $("#canvas").offset();
-            var canvasWidth = $("#canvas").outerWidth();
-            var canvasHeight = $("#canvas").outerHeight();
+    function makeDraggable($item) {
+        $item.draggable({
+            start: function(event, ui) {
+                zIndex++;
+                $(this).css("z-index", zIndex);
+            },
+            stop: function(event, ui) {
+                var $draggedItem = $(this);
+                var itemPos = ui.helper.offset();
+                var canvasPos = $("#canvas").offset();
+                var canvasWidth = $("#canvas").outerWidth();
+                var canvasHeight = $("#canvas").outerHeight();
 
-            if (
-                itemPos.left > canvasPos.left + canvasWidth ||
-                itemPos.top > canvasPos.top + canvasHeight ||
-                itemPos.left + ui.helper.outerWidth() < canvasPos.left ||
-                itemPos.top + ui.helper.outerHeight() < canvasPos.top
-            ) {
-                $draggedItem.remove();
-            } else {
-                detectCollision($draggedItem);
+                if (
+                    itemPos.left > canvasPos.left + canvasWidth ||
+                    itemPos.top > canvasPos.top + canvasHeight ||
+                    itemPos.left + ui.helper.outerWidth() < canvasPos.left ||
+                    itemPos.top + ui.helper.outerHeight() < canvasPos.top
+                ) {
+                    $draggedItem.remove();
+                } else {
+                    detectCollision($draggedItem);
+                }
             }
+        });
+    }
+
+    $(".item").each(function() {
+        makeDraggable($(this));
+    });
+
+    $(document).on("click", ".item", function() {
+        var $originalItem = $(this);
+        var duplicateTimeout = $originalItem.data("duplicateTimeout");
+
+        if (duplicateTimeout) {
+            clearTimeout(duplicateTimeout);
+            $originalItem.data("duplicateTimeout", null);
+
+            var $duplicatedItem = $originalItem.clone().css({
+                top: parseInt($originalItem.css("top")) + 10,
+                left: parseInt($originalItem.css("left")) + 10,
+                zIndex: zIndex++
+            });
+
+            if ($originalItem.closest("#canvas").length > 0) {
+                $duplicatedItem.appendTo("#canvas");
+            } else {
+                $duplicatedItem.appendTo($originalItem.parent());
+            }
+
+            makeDraggable($duplicatedItem);
+        } else {
+            var timeout = setTimeout(function() {
+                $originalItem.data("duplicateTimeout", null);
+            }, 300);
+
+            $originalItem.data("duplicateTimeout", timeout);
         }
     });
 });
+

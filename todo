@@ -4,7 +4,7 @@
     a. New item appear                      ✅
     b. animation                            ✅
     c. If already merged before, don't
-    d. If brand new item, display
+    d. If brand new item, display           ✅
 
 # Style                                     
 1. Change item font, image, style, etc      
@@ -13,4 +13,6 @@
 
 # Items                                     
 1. All item list in side                    
-2. Item duplication on double click         
+2. Item duplication on double click         ✅
+
+# Database
